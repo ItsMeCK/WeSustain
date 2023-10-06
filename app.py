@@ -100,6 +100,12 @@ def check_valid_files_uploaded(known, unknown):
     return True, "pass"
 
 
+@app.route('/api/upload1', methods=['POST'])
+def upload_image_video1():
+    return {"response": "success"}
+    validate()
+
+
 @app.route('/api/upload', methods=['POST'])
 def upload_image_video():
     # Check whether files is uploaded or not
