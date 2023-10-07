@@ -3,6 +3,7 @@ import request_id
 from flask import Flask, jsonify, request, render_template, make_response
 from request_id import RequestIdMiddleware
 import json
+from src.facerecognition.facerecognition import *
 
 registerd_users = {}
 contest_commute = {}
@@ -150,6 +151,9 @@ def check_action_sequence_new(user_no, text_msg, user_name):
     contest, contest_name = check_contest_new(text_msg)
     out = contest[user_no]
     res = out["action"]
+    actions = {1: "match", 2: "mismatch"}
+    print("Image processing status=======================")
+    print(match_images(user_no, actions[out["action"]]))
     if "matched" in action_seq[res]:
         out["points"] += 100
     out["action"] += 1 if (out["action"]+1<3) else 9999
