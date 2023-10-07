@@ -26,6 +26,9 @@ middleware = RequestIdMiddleware(
     format='{status} {REQUEST_METHOD:<6} {REQUEST_PATH:<60} {REQUEST_ID}',
 )
 
+broadcast_ids = [918446277653, 917619428942, 919146524272]
+contest_names = ["commute", "office", "food"]
+
 def get_error_result(source_type, is_no_files):
     if is_no_files:
         result = {
@@ -115,6 +118,31 @@ def upload_image_video1():
             return {"response": "forbidden"}
     return {"response": "forbidden"}
 
+
+
+#STEP_1
+@app.route('/api/broadcast', methods=['GET'])
+def broadcast_cotenst():
+    message = f"""🌿 Welcome to WeSustain! 🌍 We're excited to have you join our community of sustainability champions. 🌟 
+Every day, we host fun and engaging challenges that help you make a positive impact on the planet. 🌱 Whether it's reducing waste, conserving energy, or adopting eco-friendly habits, together, we can make a difference!
+Would you like to be part of today's challenge? Simply reply with 'YES' to join in and start your sustainability journey today.
+Let's take small steps together towards a greener, more sustainable world! 🌎
+Contest 1 - Commute Sustainably
+Contest 2 - Food Choices Matter
+Conetst 3 - Green Office, Green World
+Type 'YES for <contest name>' caption with your Photo to accept the challenge and profile validation or 'NO' if you'd like to skip today.
+
+#SustainabilityMatters #WeSustain🌿
+"""
+    broadcast_message(message, broadcast_ids)
+
+#STEP 3
+@app.route('/api/broadcast_contest', methods=['GET'])
+def broadcast_cotenst_details():
+    broadcast_cotext_details()
+
+
+
 @app.route('/api/upload1', methods=['POST'])
 def upload_image_video2():
     msg_req = json.loads(request.data)
@@ -128,14 +156,22 @@ def upload_image_video2():
     caption = msg_req.get('entry', [{}])[0].get('changes', [{}])[0].get('value', {}).get('messages', [{}])[0].get('image', {}).get('caption', 'No Caption')
     text_msg = msg_req.get('entry', [{}])[0].get('changes', [{}])[0].get('value', {}).get('messages', [{}])[0].get('text', {}).get('body', '')
 
-    if media_id != 'No Media':
-        msg_body = check_action_sequence(from_num, caption, name)
+    if "yes" in caption.lower():
+        if media_id != 'No Media':
+            msg_body = update_contest_registrations(from_num, caption, name)
+        else:
+            msg_body = "Please upload media with confirmation"
+    elif caption.lower() in contest_names:
+        msg_body = check_action_sequence_new(from_num, caption, name)
+    elif media_id != 'No Media':
+        msg_body = check_action_sequence(from_num, text_msg, name)
     elif "point" in text_msg.lower():
         msg_body = my_points(from_num, text_msg)
     elif "winner" in text_msg.lower():
         msg_body = get_winner(text_msg, True)
     elif "leader" in text_msg.lower():
         msg_body = leader_board(text_msg)
+     
     else:
         msg_body = "No media received."
        
