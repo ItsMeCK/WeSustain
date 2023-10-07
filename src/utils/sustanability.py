@@ -49,6 +49,7 @@ def get_winner(contest_name, winner_flag = True):
     if contest is None:
         contest_keys = list(contest_commute.keys()) + list(contest_food.keys()) + list(contest_office.keys())
         registerd_users = list(set(contest_keys))
+        contest_name = "all"
     else:
         registerd_users = contest.keys()
     base_points = 0
@@ -71,7 +72,7 @@ def get_winner(contest_name, winner_flag = True):
         winner = contest_office[winner_no]['name']
     else:
         return f"No valid winner for the contest"
-    return f"Winner for today's challenge is {winner}"
+    return f"🏆 Winner for today's {contest_name} challenges is ***{winner}*** 🏆"
 
 
 def get_user_dict_new(in_dict):
@@ -203,3 +204,19 @@ Ready to transform your office day into a sustainability masterpiece? Reply 'YES
 Click a photo while travelling and upload with caption - <Contest Name>"""
     broadcast_message(message, list(set(list(contest_commute.keys()) + list(contest_office.keys()) + list(contest_food.keys()))))
     return "Contest details sent"
+
+
+def winner_announcement_details():
+    msg_body = get_winner("winner", True)
+    message = f"""🌿 Good evening, WeSustain Warriors! 🌍
+Eager to win ? Ready to transform your office day into a sustainability masterpiece? Reply 'Leader', if you want to see who is leading. 
+Inspire others to join the cause!
+
+{msg_body}
+
+Let's make today count for a more sustainable world! 💚🌎
+
+#SustainabilityChallenge #GreenOffice #WeSustain🌿
+"""
+    broadcast_message(message, list(set(list(contest_commute.keys()) + list(contest_office.keys()) + list(contest_food.keys()))))
+    return "Winner announcement sent"

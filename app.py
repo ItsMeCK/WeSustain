@@ -142,6 +142,11 @@ def broadcast_cotenst_details():
     broadcast_cotext_details()
 
 
+#STEP 4
+@app.route('/api/announce_winner', methods=['GET'])
+def broadcast_cotenst_details():
+    winner_announcement_details()
+
 
 @app.route('/api/upload1', methods=['POST'])
 def upload_image_video2():
