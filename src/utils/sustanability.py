@@ -153,8 +153,8 @@ def check_action_sequence_new(user_no, text_msg, user_name):
     out = contest[user_no]
     res = out["action"]
     actions = {1: "match", 2: "mismatch"}
-    print("Image processing status=======================")
-    print(match_images(user_no, actions[out["action"]]))
+    # print("Image processing status=======================")
+    # print(match_images(user_no, actions[out["action"]]))
     if "matched" in action_seq[res]:
         out["points"] += 100
     out["action"] += 1 if (out["action"]+1<3) else 9999
@@ -208,7 +208,7 @@ Click a photo while travelling and upload with caption - <Contest Name>"""
 
 def winner_announcement_details():
     msg_body = get_winner("winner", True)
-    message = f"""🌿 Good evening, WeSustain Warriors! 🌍
+    message = f"""🌿 Good Evening, WeSustain Warriors! 🌍
 Eager to win ? Ready to transform your office day into a sustainability masterpiece? Reply 'Leader', if you want to see who is leading. 
 Inspire others to join the cause!
 

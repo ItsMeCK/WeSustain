@@ -26,7 +26,7 @@ middleware = RequestIdMiddleware(
     format='{status} {REQUEST_METHOD:<6} {REQUEST_PATH:<60} {REQUEST_ID}',
 )
 
-broadcast_ids = [918446277653, 917619428942, 919146524272]
+broadcast_ids = [918446277653, 917619428942, 919146524272, 919967539009 ,919595902693 ]
 contest_names = ["commute", "office", "food"]
 
 def get_error_result(source_type, is_no_files):
@@ -135,6 +135,7 @@ Type 'YES for <contest name>' caption with your Photo to accept the challenge an
 #SustainabilityMatters #WeSustain🌿
 """
     broadcast_message(message, broadcast_ids)
+    return "Done"
 
 #STEP 3
 @app.route('/api/broadcast_contest', methods=['GET'])
@@ -166,6 +167,7 @@ def upload_image_video2():
             msg_body = update_contest_registrations(from_num, caption, name)
         else:
             msg_body = "Please upload media with confirmation"
+            
     elif caption.lower() in contest_names:
         msg_body = check_action_sequence_new(from_num, caption, name)
     elif media_id != 'No Media':
